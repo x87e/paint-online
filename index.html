@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MS Paint Online | The Paint You Grew Up With</title>
+    <link href="styles.css?v=22" rel="stylesheet">
+  </head>
+  <body>
+    <div class="paint-app" id="paintApp">
+      <header class="paint-chrome" aria-label="Paint ribbon">
+        <nav class="paint-tabs" aria-label="Primary menu">
+          <button class="paint-tab paint-tab-file" id="menuFile" type="button" aria-controls="fileMenu" aria-expanded="false">File</button>
+          <button class="paint-tab is-active" id="tabHome" type="button" data-ribbon-target="ribbonHome">Home</button>
+          <button class="paint-tab" id="tabView" type="button" data-ribbon-target="ribbonView">View</button>
+          <div class="quick-access-toolbar" role="toolbar" aria-label="Quick access">
+            <button class="quick-access-button is-disabled" id="commandUndo" type="button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9.5 6.5 4.5 11l5 4.5"></path>
+                <path d="M5 11h7.5c4.2 0 6.5 2.1 6.5 6"></path>
+              </svg>
+            </button>
+            <button class="quick-access-button is-disabled" id="commandRedo" type="button" title="Redo (Ctrl+Y)" aria-label="Redo" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m14.5 6.5 5 4.5-5 4.5"></path>
+                <path d="M19 11h-7.5C7.3 11 5 13.1 5 17"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="paint-window-actions" aria-hidden="true">
+            <span class="collapse-ribbon"></span>
+            <span class="help-dot">?</span>
+          </div>
+        </nav>
+
+        <aside class="file-menu" id="fileMenu" aria-label="File menu" hidden>
+          <button class="file-option" id="commandNew" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="file-icon-paper" d="M5.5 2.5h9l4 4v15h-13Z"></path><path class="file-icon-fold" d="M14.5 2.5v4h4"></path><path class="file-icon-accent" d="M8 11h8M8 14h8M8 17h6"></path></svg>
+            </span>
+            <span>New</span>
+          </button>
+          <button class="file-option" id="commandOpen" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="file-icon-folder-back" d="M2.5 6.5h7l2-2h10v14h-19Z"></path><path class="file-icon-folder-front" d="m3 9.5 3-2h16l-3 12H3Z"></path></svg>
+            </span>
+            <span>Open</span>
+          </button>
+          <button class="file-option" id="commandSave" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="file-icon-save-body" d="M3 2.5h15l3 3v16H3Z"></path><path class="file-icon-save-label" d="M6 3.5h10v6H6ZM6.5 13h11v8h-11Z"></path><path class="file-icon-accent" d="M9 15.5h6"></path></svg>
+            </span>
+            <span>Save</span>
+          </button>
+          <button class="file-option" id="commandSaveAs" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="file-icon-save-body" d="M3 2.5h14l3 3v14H3Z"></path><path class="file-icon-save-label" d="M6 3.5h9v5H6ZM6 12h9v7H6Z"></path><path class="file-icon-pencil" d="m13.5 18.5 1-3 5.6-5.6 2 2-5.6 5.6Z"></path></svg>
+            </span>
+            <span>Save as</span>
+          </button>
+          <div class="file-separator" role="separator"></div>
+          <button class="file-option" id="commandPrint" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="file-icon-paper" d="M6 2.5h12v7H6Z"></path><path class="file-icon-printer" d="M3 8.5h18v9H3Z"></path><path class="file-icon-paper" d="M6 14h12v7.5H6Z"></path><circle class="file-icon-light" cx="18" cy="11.5" r="1"></circle><path class="file-icon-accent" d="M8 17h8M8 19h7"></path></svg>
+            </span>
+            <span>Print</span>
+          </button>
+          <button class="file-option" id="commandSetAsDesktop" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect class="file-icon-screen" x="2.5" y="3.5" width="19" height="14" rx="1"></rect><path class="file-icon-land" d="m4.5 15 4-4 3 2.6 3.4-4.1 4.6 5.5Z"></path><circle class="file-icon-sun" cx="16.8" cy="7.5" r="1.6"></circle><path class="file-icon-accent" d="M9 21h6M12 17.5V21"></path></svg>
+            </span>
+            <span>Set as desktop background</span>
+          </button>
+          <div class="file-separator" role="separator"></div>
+          <button class="file-option" id="commandProperties" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path class="file-icon-paper" d="M4 2.5h16v19H4Z"></path><path class="file-icon-check" d="m7 8 1.5 1.5L11 6.5m-4 8L8.5 16l2.5-3"></path><path class="file-icon-accent" d="M13 8h4M13 14.5h4M7 19h10"></path></svg>
+            </span>
+            <span>Properties</span>
+          </button>
+          <div class="file-separator" role="separator"></div>
+          <button class="file-option" id="commandAbout" type="button">
+            <span class="file-menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle class="file-icon-info-circle" cx="12" cy="12" r="9.5"></circle><circle class="file-icon-info-dot" cx="12" cy="7.2" r="1.2"></circle><path class="file-icon-info-mark" d="M12 10.5v7"></path></svg>
+            </span>
+            <span>About Paint Online</span>
+          </button>
+        </aside>
+
+        <section class="paint-ribbon is-active" id="ribbonHome" aria-label="Home ribbon">
+          <div class="ribbon-scroll">
+            <section class="ribbon-group ribbon-group-clipboard" id="sectionClipboard" aria-label="Clipboard">
+              <div class="group-body clipboard-body">
+                <button class="ribbon-button ribbon-button-large" id="commandPaste" type="button">
+                  <span class="paint-icon icon-paste" aria-hidden="true">
+                    <svg viewBox="0 0 28 32">
+                      <rect class="clipboard-board" x="2.5" y="4.5" width="23" height="26" rx="1"></rect>
+                      <rect class="clipboard-paper" x="5" y="7" width="18" height="21"></rect>
+                      <path class="clipboard-lines" d="M8 12h12M8 16h12M8 20h9M8 24h11"></path>
+                      <path class="clipboard-clip" d="M9 5V3.5C9 2.7 9.7 2 10.5 2h7c.8 0 1.5.7 1.5 1.5V5Z"></path>
+                    </svg>
+                  </span>
+                  <span class="button-label">Paste</span>
+                  <span class="button-caret" aria-hidden="true"></span>
+                </button>
+                <div class="stacked-buttons">
+                  <button class="ribbon-button ribbon-button-small is-disabled" id="commandCut" type="button" disabled>
+                    <span class="paint-icon icon-cut" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path class="scissor-blade" d="m7.5 14.2 10-11.2M16.5 14.2 6.5 3"></path>
+                        <circle class="scissor-handle" cx="6" cy="17" r="3.2"></circle>
+                        <circle class="scissor-handle" cx="18" cy="17" r="3.2"></circle>
+                        <circle class="scissor-pivot" cx="12" cy="10.2" r="1.25"></circle>
+                      </svg>
+                    </span>
+                    <span>Cut</span>
+                  </button>
+                  <button class="ribbon-button ribbon-button-small is-disabled" id="commandCopy" type="button" disabled>
+                    <span class="paint-icon icon-copy" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path class="copy-back" d="M4 3.5h11.5l3.5 3.7V18H4Z"></path>
+                        <path class="copy-front" d="M7 6.5h10.5l3.5 3.7V21H7Z"></path>
+                        <path class="copy-fold" d="M17.5 6.5v3.7H21"></path>
+                        <path class="copy-lines" d="M10 12h8M10 15h8M10 18h6"></path>
+                      </svg>
+                    </span>
+                    <span>Copy</span>
+                  </button>
+                </div>
+              </div>
+              <h2 class="group-label">Clipboard</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-image" id="sectionImage" aria-label="Image">
+              <div class="group-body image-body">
+                <div class="select-split-button">
+                  <button class="ribbon-button select-button" id="toolSelect" type="button">
+                    <span class="paint-icon icon-select" aria-hidden="true"></span>
+                    <span class="button-label">Select</span>
+                  </button>
+                  <button class="select-options-button" id="selectionOptions" type="button" aria-label="Selection options" title="Selection options">
+                    <span class="button-caret" aria-hidden="true"></span>
+                  </button>
+                </div>
+                <div class="stacked-buttons">
+                  <button class="ribbon-button ribbon-button-small is-disabled" id="toolCrop" type="button" disabled>
+                    <span class="paint-icon icon-crop" aria-hidden="true"></span>
+                    <span>Crop</span>
+                  </button>
+                  <button class="ribbon-button ribbon-button-small" id="toolResize" type="button">
+                    <span class="paint-icon icon-resize" aria-hidden="true"></span>
+                    <span>Resize</span>
+                  </button>
+                  <button class="ribbon-button ribbon-button-small" id="toolRotate" type="button">
+                    <span class="paint-icon icon-rotate" aria-hidden="true"></span>
+                    <span>Rotate</span>
+                    <span class="button-caret" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <h2 class="group-label">Image</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-tools" id="sectionTools" aria-label="Tools">
+              <div class="group-body tools-grid">
+                <button class="tool-button" id="toolPencil" type="button" title="Pencil">
+                  <span class="paint-icon icon-pencil" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path class="tool-icon-shadow" d="m4.1 18.1-.8 3.1 3.1-.8L20 6.8l-2.3-2.3Z"></path>
+                      <path class="pencil-body" d="m5.5 16.7 2.2 2.2L20 6.6l-2.2-2.2Z"></path>
+                      <path class="pencil-highlight" d="m7 15.2 1 1L18.5 5.8l-1-1Z"></path>
+                      <path class="pencil-wood" d="m3.3 21.2 2.2-4.5 2.2 2.2Z"></path>
+                      <path class="pencil-lead" d="m3.3 21.2.8-1.7 1 1Z"></path>
+                    </svg>
+                  </span>
+                </button>
+                <button class="tool-button" id="toolFill" type="button" title="Fill with colour">
+                  <span class="paint-icon icon-fill" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path class="bucket-handle" d="M8 7.5c.2-3.4 5.1-5 7.5-2.1"></path>
+                      <path class="bucket-body" d="m5 9 6.5-4 6 9.5-7.7 4.7Z"></path>
+                      <path class="bucket-rim" d="m5 9 7.6 1.2 4.9 4.3"></path>
+                      <path class="paint-stream" d="M8.8 17.7c3.1-.2 5.9-.1 8.1.4"></path>
+                      <path class="paint-drop" d="M19.1 15.4c1.3 1.8 2 2.8 2 3.8a2 2 0 0 1-4 0c0-1 .7-2 2-3.8Z"></path>
+                    </svg>
+                  </span>
+                </button>
+                <button class="tool-button" id="toolText" type="button" title="Text">
+                  <span class="paint-icon icon-text" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path class="text-shadow" d="M5 20 10.6 4h3L19 20h-3.2l-1.2-3.8H9.3L8.1 20Zm5.2-6.4h3.6L12 7.8Z"></path>
+                      <path class="text-face" d="M4.2 19.2 9.8 3.2h3l5.4 16h-3.1l-1.2-3.8H8.6l-1.2 3.8Zm5.2-6.4H13l-1.8-5.8Z"></path>
+                    </svg>
+                  </span>
+                </button>
+                <button class="tool-button" id="toolEraser" type="button" title="Eraser">
+                  <span class="paint-icon icon-eraser" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path class="eraser-shadow" d="m4 17 9.5-10 7 6.5-7.3 7.3H7Z"></path>
+                      <path class="eraser-pink" d="m3.3 15.9 9.4-10 4.9 4.6-9.4 10H6Z"></path>
+                      <path class="eraser-light" d="m8.2 20.5 9.4-10 3.5 3.2-7.1 6.8Z"></path>
+                      <path class="eraser-seam" d="m8.2 20.5-4.9-4.6"></path>
+                    </svg>
+                  </span>
+                </button>
+                <button class="tool-button" id="toolEyedrop" type="button" title="Colour picker">
+                  <span class="paint-icon icon-eyedrop" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path class="dropper-bulb" d="M15.3 3.1a3 3 0 0 1 4.2 4.2l-2 2-4.2-4.2Z"></path>
+                      <path class="dropper-tube" d="m14.8 6.6 2.6 2.6-8.9 8.9-4.1 1.3 1.4-4Z"></path>
+                      <path class="dropper-highlight" d="m7 15.6 8.7-8.7"></path>
+                      <path class="dropper-drop" d="M4 19.4c1 1.3 1.4 2 1.4 2.6a1.4 1.4 0 0 1-2.8 0c0-.6.5-1.3 1.4-2.6Z"></path>
+                    </svg>
+                  </span>
+                </button>
+                <button class="tool-button" id="toolMagnifier" type="button" title="Magnifier">
+                  <span class="paint-icon icon-magnifier" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <circle class="magnifier-shadow" cx="10.2" cy="9.8" r="6.7"></circle>
+                      <circle class="magnifier-glass" cx="9.6" cy="9.2" r="6.2"></circle>
+                      <path class="magnifier-shine" d="M6.3 6.5A4.4 4.4 0 0 1 10 4.9"></path>
+                      <path class="magnifier-handle-shadow" d="m14.3 14 6.4 6.4"></path>
+                      <path class="magnifier-handle" d="m13.8 13.5 6.4 6.4"></path>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <h2 class="group-label">Tools</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-brushes" id="sectionBrushes" aria-label="Brushes">
+              <div class="group-body brushes-body">
+                <button class="ribbon-button brush-select is-selected" id="toolBrushes" type="button" data-brush-style="brush">
+                  <span class="paint-icon icon-brush" aria-hidden="true"></span>
+                  <span class="button-label">Brushes</span>
+                  <span class="button-caret" aria-hidden="true"></span>
+                </button>
+              </div>
+              <h2 class="group-label">Brushes</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-shapes" id="sectionShapes" aria-label="Shapes">
+              <div class="group-body shapes-body">
+                <div class="shape-grid" aria-label="Shape picker">
+                  <button class="shape-button" id="shapeLine" type="button" title="Line">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="20" x2="21" y2="4"></line></svg>
+                  </button>
+                  <button class="shape-button" id="shapeCurve" type="button" title="Curve">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 C8 3, 15 4, 21 15"></path></svg>
+                  </button>
+                  <button class="shape-button" id="shapeOval" type="button" title="Oval">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="8" ry="6"></ellipse></svg>
+                  </button>
+                  <button class="shape-button" id="shapeRectangle" type="button" title="Rectangle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12"></rect></svg>
+                  </button>
+                  <button class="shape-button" id="shapeRoundedRectangle" type="button" title="Rounded rectangle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="3"></rect></svg>
+                  </button>
+                  <button class="shape-button" id="shapePolygon" type="button" title="Polygon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,18 4,9 11,4 20,7 18,18"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeTriangle" type="button" title="Triangle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,4 21,20 3,20"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeRightTriangle" type="button" title="Right triangle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5,4 20,20 5,20"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeDiamond" type="button" title="Diamond">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,3 21,12 12,21 3,12"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapePentagon" type="button" title="Pentagon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,3 21,10 18,21 6,21 3,10"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeHexagon" type="button" title="Hexagon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="8,4 16,4 21,12 16,20 8,20 3,12"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeRightArrow" type="button" title="Right arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="4,9 14,9 14,5 21,12 14,19 14,15 4,15"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeLeftArrow" type="button" title="Left arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="20,9 10,9 10,5 3,12 10,19 10,15 20,15"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeUpArrow" type="button" title="Up arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="9,20 9,10 5,10 12,3 19,10 15,10 15,20"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeDownArrow" type="button" title="Down arrow">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="9,4 9,14 5,14 12,21 19,14 15,14 15,4"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeFourPointStar" type="button" title="Four point star">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 15,9 22,12 15,15 12,22 9,15 2,12 9,9"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeFivePointStar" type="button" title="Five point star">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,3 14.6,9 21,9.4 16,13.5 17.6,20 12,16.6 6.4,20 8,13.5 3,9.4 9.4,9"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeSixPointStar" type="button" title="Six point star">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 15,8 22,8 18,13 20,20 12,17 4,20 6,13 2,8 9,8"></polygon></svg>
+                  </button>
+                  <button class="shape-button" id="shapeCalloutRect" type="button" title="Rectangular callout">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5 H20 V16 H12 L7 21 V16 H4 Z"></path></svg>
+                  </button>
+                  <button class="shape-button" id="shapeCalloutRound" type="button" title="Rounded callout">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6 Q5 4 7 4 H18 Q21 4 21 7 V14 Q21 17 18 17 H13 L8 21 V17 H7 Q5 17 5 15 Z"></path></svg>
+                  </button>
+                  <button class="shape-button" id="shapeCalloutCloud" type="button" title="Cloud callout">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16 C3 16 3 10 7 10 C7 6 13 5 15 8 C20 7 22 13 18 16 H12 L8 21 V16 Z"></path></svg>
+                  </button>
+                  <button class="shape-button" id="shapeHeart" type="button" title="Heart">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20 C6 15 3 12 4 8 C5 4 10 5 12 8 C14 5 19 4 20 8 C21 12 18 15 12 20 Z"></path></svg>
+                  </button>
+                </div>
+                <div class="shape-options">
+                  <button class="ribbon-button ribbon-button-small" id="shapeOutline" type="button">
+                    <span class="paint-icon icon-outline" aria-hidden="true"></span>
+                    <span>Outline</span>
+                    <span class="button-caret" aria-hidden="true"></span>
+                  </button>
+                  <button class="ribbon-button ribbon-button-small is-disabled" id="shapeFill" type="button" disabled>
+                    <span class="paint-icon icon-fill-menu" aria-hidden="true"></span>
+                    <span>Fill</span>
+                    <span class="button-caret" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+              <h2 class="group-label">Shapes</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-size" id="sectionSize" aria-label="Size">
+              <div class="group-body size-body">
+                <button class="ribbon-button size-button" id="toolSize" type="button">
+                  <span class="paint-icon icon-size" aria-hidden="true"></span>
+                  <span class="button-label">Size</span>
+                  <span class="button-caret" aria-hidden="true"></span>
+                </button>
+              </div>
+              <h2 class="group-label">Size</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-colours" id="sectionColours" aria-label="Colours">
+              <div class="group-body colours-body">
+                <button class="colour-role is-selected" id="colour1" type="button">
+                  <span class="colour-preview" id="colour1Preview"></span>
+                  <span>Colour<br>1</span>
+                </button>
+                <button class="colour-role" id="colour2" type="button">
+                  <span class="colour-preview colour-preview-secondary" id="colour2Preview"></span>
+                  <span>Colour<br>2</span>
+                </button>
+                <div class="colour-palette" id="colourPalette" aria-label="Colour palette"></div>
+                <button class="edit-colours" id="commandEditColours" type="button">
+                  <span class="paint-icon icon-edit-colours" aria-hidden="true"></span>
+                  <span>Edit<br>colours</span>
+                </button>
+              </div>
+              <h2 class="group-label">Colours</h2>
+            </section>
+          </div>
+        </section>
+
+        <section class="paint-ribbon" id="ribbonView" aria-label="View ribbon" hidden>
+          <div class="ribbon-scroll">
+            <section class="ribbon-group" id="sectionZoom" aria-label="Zoom">
+              <div class="group-body view-body">
+                <button class="ribbon-button ribbon-button-large" id="viewZoomIn" type="button">
+                  <span class="paint-icon icon-magnifier-plus" aria-hidden="true"></span>
+                  <span class="button-label">Zoom in</span>
+                </button>
+                <button class="ribbon-button ribbon-button-large" id="viewZoomOut" type="button">
+                  <span class="paint-icon icon-magnifier-minus" aria-hidden="true"></span>
+                  <span class="button-label">Zoom out</span>
+                </button>
+                <button class="ribbon-button ribbon-button-large zoom-reset-button" id="viewZoomReset" type="button">
+                  <span class="paint-icon icon-zoom-actual" aria-hidden="true">
+                    <span class="zoom-text" id="viewZoomPercentText">100</span>
+                  </span>
+                  <span class="button-label zoom-button-label">
+                    <span class="zoom-edit-trigger" id="viewZoomLabelPercent">100%</span>
+                  </span>
+                </button>
+              </div>
+              <h2 class="group-label">Zoom</h2>
+            </section>
+
+            <section class="ribbon-group" id="sectionShowHide" aria-label="Show or hide">
+              <div class="group-body checkbox-body">
+                <label class="paint-check"><input type="checkbox" id="viewRulers"> Rulers</label>
+                <label class="paint-check"><input type="checkbox" id="viewGridlines"> Gridlines</label>
+                <label class="paint-check"><input type="checkbox" id="viewStatusBar" checked> Status bar</label>
+              </div>
+              <h2 class="group-label">Show or hide</h2>
+            </section>
+
+            <section class="ribbon-group ribbon-group-display" id="sectionDisplay" aria-label="Display">
+              <div class="group-body display-body">
+                <button class="ribbon-button ribbon-button-large display-command" id="viewFullScreen" type="button">
+                  <span class="paint-icon icon-fullscreen" aria-hidden="true"></span>
+                  <span class="button-label">Full<br>screen</span>
+                </button>
+                <button class="ribbon-button ribbon-button-large display-command is-disabled" id="viewThumbnail" type="button" aria-disabled="true" disabled>
+                  <span class="paint-icon icon-thumbnail" aria-hidden="true"></span>
+                  <span class="button-label">Thumbnail</span>
+                </button>
+              </div>
+              <h2 class="group-label">Display</h2>
+            </section>
+          </div>
+        </section>
+      </header>
+
+      <main class="paint-workspace" id="paintViewport" aria-label="Paint workspace">
+        <div class="canvas-stage" id="canvasStage">
+          <div class="ruler ruler-horizontal" id="horizontalRuler" aria-hidden="true"></div>
+          <div class="ruler ruler-vertical" id="verticalRuler" aria-hidden="true"></div>
+          <div class="canvas-frame" id="canvasFrame">
+            <canvas id="editingCanvas" width="886" height="635" aria-label="Editing canvas"></canvas>
+            <button class="canvas-resize-handle canvas-resize-right" id="resizeCanvasRight" type="button" data-resize-axis="x" aria-label="Resize canvas width"></button>
+            <button class="canvas-resize-handle canvas-resize-bottom" id="resizeCanvasBottom" type="button" data-resize-axis="y" aria-label="Resize canvas height"></button>
+            <button class="canvas-resize-handle canvas-resize-corner" id="resizeCanvasCorner" type="button" data-resize-axis="xy" aria-label="Resize canvas"></button>
+          </div>
+          <aside class="thumbnail-window" id="thumbnailWindow" aria-label="Image thumbnail preview" hidden>
+            <div class="thumbnail-title">Thumbnail</div>
+            <canvas id="thumbnailCanvas" width="221" height="159" aria-label="Canvas thumbnail preview"></canvas>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="paint-status" id="paintStatus" aria-label="Status bar">
+        <div class="status-cell status-icon" aria-hidden="true">+</div>
+        <div class="status-cell status-selection" aria-label="Selection size">
+          <span class="selection-mark"></span>
+        </div>
+        <div class="status-cell status-canvas-size">
+          <span class="size-mark"></span>
+          <span id="canvasDimensions">886 x 635px</span>
+        </div>
+        <div class="status-cell status-message" role="status" aria-live="polite"></div>
+        <div class="status-cell status-zoom">
+          <span id="zoomPercent">100%</span>
+          <button class="zoom-button" id="zoomOut" type="button" aria-label="Zoom out">-</button>
+          <input class="zoom-range" id="zoomRange" type="range" min="10" max="200" step="10" value="100" aria-label="Zoom percentage">
+          <button class="zoom-button" id="zoomIn" type="button" aria-label="Zoom in">+</button>
+        </div>
+      </footer>
+
+      <section class="edit-colours-dialog" id="editColoursDialog" role="dialog" aria-modal="true" aria-labelledby="editColoursTitle" hidden>
+        <div class="edit-colours-window">
+          <header class="edit-colours-titlebar">
+            <h2 id="editColoursTitle">Edit Colours</h2>
+            <button class="dialog-close" id="editColoursClose" type="button" aria-label="Close Edit Colours">&times;</button>
+          </header>
+
+          <div class="edit-colours-content">
+            <section class="basic-colours-panel" aria-label="Basic colours">
+              <h3>Basic colours:</h3>
+              <div class="dialog-swatch-grid basic-colours-grid" id="basicColoursGrid"></div>
+
+              <h3 class="custom-colours-heading">Custom colours:</h3>
+              <div class="dialog-swatch-grid custom-colours-grid" id="customColoursGrid"></div>
+
+              <button class="dialog-button define-custom-button" id="defineCustomColours" type="button" disabled>Define Custom Colours &gt;&gt;</button>
+            </section>
+
+            <section class="colour-picker-panel" aria-label="Colour picker">
+              <div class="colour-picker-main">
+                <div class="colour-spectrum-wrap">
+                  <canvas id="colourSpectrum" width="176" height="188" aria-label="Colour spectrum"></canvas>
+                  <span class="spectrum-marker" id="spectrumMarker" aria-hidden="true"></span>
+                </div>
+                <div class="luminosity-wrap">
+                  <canvas id="luminositySlider" width="14" height="188" aria-label="Luminosity slider"></canvas>
+                  <span class="luminosity-marker" id="luminosityMarker" aria-hidden="true"></span>
+                </div>
+              </div>
+
+              <div class="colour-fields-row">
+                <div class="colour-preview-solid" id="dialogColourPreview" aria-label="Selected colour preview"></div>
+                <span class="colour-solid-label">Colour|Solid</span>
+                <div class="colour-number-fields colour-fields-hsl">
+                  <label>Hue: <input id="fieldHue" type="number" min="0" max="239"></label>
+                  <label>Sat: <input id="fieldSat" type="number" min="0" max="240"></label>
+                  <label>Lum: <input id="fieldLum" type="number" min="0" max="240"></label>
+                </div>
+                <div class="colour-number-fields colour-fields-rgb">
+                  <label>Red: <input id="fieldRed" type="number" min="0" max="255"></label>
+                  <label>Green: <input id="fieldGreen" type="number" min="0" max="255"></label>
+                  <label>Blue: <input id="fieldBlue" type="number" min="0" max="255"></label>
+                </div>
+              </div>
+
+              <button class="dialog-button add-custom-button" id="addToCustomColours" type="button">Add to Custom Colours</button>
+            </section>
+          </div>
+
+          <footer class="edit-colours-actions">
+            <button class="dialog-button dialog-primary" id="editColoursOk" type="button">OK</button>
+            <button class="dialog-button" id="editColoursCancel" type="button">Cancel</button>
+          </footer>
+        </div>
+      </section>
+
+      <section class="operation-dialog" id="operationDialog" role="dialog" aria-modal="true" aria-labelledby="operationDialogTitle" hidden>
+        <form class="operation-window" id="operationDialogForm">
+          <header class="edit-colours-titlebar">
+            <h2 id="operationDialogTitle">Paint</h2>
+            <button class="dialog-close" id="operationDialogClose" type="button" aria-label="Close dialog">&times;</button>
+          </header>
+
+          <div class="operation-content">
+            <div class="operation-message" id="operationDialogMessage"></div>
+            <div class="operation-fields" id="operationDialogFields"></div>
+          </div>
+
+          <footer class="operation-actions">
+            <button class="dialog-button dialog-primary" id="operationDialogConfirm" type="submit">OK</button>
+            <button class="dialog-button" id="operationDialogCancel" type="button">Cancel</button>
+          </footer>
+        </form>
+      </section>
+    </div>
+
+    <input id="openImageInput" type="file" accept=".png,.jpg,.webp,.gif,.bmp" hidden>
+    <script src="gif-encoder.js?v=2"></script>
+    <script src="app.js?v=27"></script>
+  </body>
+</html>
