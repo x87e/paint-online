@@ -882,6 +882,7 @@
     });
     setControlDisabled(document.getElementById("shapeFill"), tool !== "shape");
     paintApp.dataset.activeTool = tool;
+    paintApp.dataset.brushStyle = state.brushStyle;
     setStatus(`${label || tool} selected`);
   }
 
