@@ -1,5 +1,8 @@
-# Paint Online - The Paint You Grew Up With
+# Paint Online - Old school mspaint.exe but online forever
 An open-source, online and browser-based tribute to classic desktop Paint.
+
+**https://mrpaint.net** 
+(forwards to https://mspaint.co.uk hosted on Github pages).
 
 Supports opening, editing and saving png/jpg/gif/webp file formats up to 2560×2560px (maximum 10MB file size).
 
